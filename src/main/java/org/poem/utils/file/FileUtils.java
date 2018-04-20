@@ -1,6 +1,7 @@
-package org.poem.utils;
+package org.poem.utils.file;
 
 import org.apache.commons.io.IOUtils;
+import org.poem.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,34 +19,36 @@ import java.util.List;
 /**
  * Created by poem on 2016/6/18.
  */
-public class FileUtils extends org.apache.commons.io.FileUtils{
+public class FileUtils extends org.apache.commons.io.FileUtils {
 
-    /** The Constant LOG. */
-    private static final Logger LOG  = LoggerFactory.getLogger(FileUtils.class);
+    /**
+     * The Constant LOG.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(FileUtils.class);
 
     /**
      * 禁止创建工具类的实例.
      */
-    private FileUtils(){
+    private FileUtils() {
     }
 
     /**
      * 扫描指定根路径下满足条件的文件的URL地址集合.
      *
-     * @param path 文件夹路径
+     * @param path       文件夹路径
      * @param fileFilter 文件过滤器
      * @return 文件url地址集合
      */
-    public static List<URL> scanFileByPath(String path, FileFilter fileFilter){
+    public static List<URL> scanFileByPath(String path, FileFilter fileFilter) {
         if (StringUtils.isEmpty(path)) {
             return null;
         }
         List<URL> rsList = new ArrayList<URL>();
         File rootFile = new File(path);
-        if(rootFile.exists() && rootFile.isDirectory()){
+        if (rootFile.exists() && rootFile.isDirectory()) {
             try {
                 scanFile(rsList, rootFile.listFiles(fileFilter), fileFilter);
-            } catch ( MalformedURLException e ) {
+            } catch (MalformedURLException e) {
                 LOG.error(e.getMessage(), e);
             }
         }
@@ -55,32 +58,32 @@ public class FileUtils extends org.apache.commons.io.FileUtils{
     /**
      * Scan file.
      *
-     * @param urlArray 符合条件的文件的URL地址的集合
-     * @param files 被扫描的文件对象数组
+     * @param urlArray   符合条件的文件的URL地址的集合
+     * @param files      被扫描的文件对象数组
      * @param fileFilter 文件过滤器
      * @throws MalformedURLException the malformed url exception
      */
-    private static void scanFile( List<URL> urlArray, File[] files, FileFilter fileFilter ) throws MalformedURLException{
+    private static void scanFile(List<URL> urlArray, File[] files, FileFilter fileFilter) throws MalformedURLException {
         if (files != null && urlArray != null && fileFilter != null) {
-            for ( int i = 0; i < files.length; i++ ) {
+            for (int i = 0; i < files.length; i++) {
                 if (files[i].isFile()) {
-                    urlArray.add( files[i].toURI().toURL() );
+                    urlArray.add(files[i].toURI().toURL());
                 } else if (files[i].isDirectory()) {
-                    scanFile( urlArray, files[i].listFiles( fileFilter ), fileFilter );
+                    scanFile(urlArray, files[i].listFiles(fileFilter), fileFilter);
                 }
             }
         }
     }
 
     /**
-     * @Title: read
-     * @Description: 读取文件流
      * @param file
      * @return
      * @throws Exception
+     * @Title: read
+     * @Description: 读取文件流
      */
     public static byte[] read(File file) {
-        if(file != null && file.exists() && file.isFile()){
+        if (file != null && file.exists() && file.isFile()) {
             FileInputStream fileInputStream = null;
             try {
                 byte[] fileContent = new byte[(int) file.length()];//如果文件太大，可能强转失败，太大的文件内存其实也放不下
@@ -98,7 +101,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils{
             } catch (IOException e) {
                 LOG.error(e.getMessage(), e);
             } finally {
-                if(null != fileInputStream) {
+                if (null != fileInputStream) {
                     IOUtils.closeQuietly(fileInputStream);
                 }
             }
@@ -108,13 +111,14 @@ public class FileUtils extends org.apache.commons.io.FileUtils{
 
     /**
      * 获取文件的扩展名
+     *
      * @param filename
      * @return
      */
     public static String getExtensionName(String filename) {
         if ((filename != null) && (filename.length() > 0)) {
             int dot = filename.lastIndexOf('.');
-            if ((dot >-1) && (dot < (filename.length() - 1))) {
+            if ((dot > -1) && (dot < (filename.length() - 1))) {
                 return filename.substring(dot + 1);
             }
         }

@@ -1,5 +1,6 @@
-package org.poem.utils;
+package org.poem.utils.properties;
 
+import org.poem.utils.file.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +17,9 @@ import java.util.regex.Pattern;
 /**
  * Created by poem on 2016/6/18.
  */
-public class PropertyUtils {
+public class PropertiesUtils {
     /** The Constant LOG. */
-    private static final Logger LOG  = LoggerFactory.getLogger(PropertyUtils.class);
+    private static final Logger LOG  = LoggerFactory.getLogger(PropertiesUtils.class);
 
     /** 加载配置文件的对象. */
     private static Properties prop = new Properties();
@@ -30,9 +31,9 @@ public class PropertyUtils {
              * 但是在线上的时候，打包成了war或者是jar包，那么获取文件的路径就在war内部
              * 需要区别对待
              */
-            String path = PropertyUtils.class.getClassLoader().getResource("").getPath() ;
+            String path = PropertiesUtils.class.getClassLoader().getResource("").getPath() ;
             if(path.indexOf("war!")  == -1){
-                path =  PropertyUtils.class.getResource("/").toURI().getPath();
+                path =  PropertiesUtils.class.getResource("/").toURI().getPath();
             }
             List<URL> fileUrls = FileUtils.scanFileByPath(path, new FileFilter() {
                 @Override
@@ -58,7 +59,7 @@ public class PropertyUtils {
     /**
      * 禁止创建工具类的实例.
      */
-    private PropertyUtils(){
+    private PropertiesUtils(){
     }
 
     /**
