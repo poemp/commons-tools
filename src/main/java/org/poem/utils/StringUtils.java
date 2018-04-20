@@ -4,11 +4,39 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 
 /**
- * Created by yineng on 2015/2/2.
+ * Created by poem on 2015/2/2.
  * String 字符验证
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils{
 
+    
+    /**
+     * 过滤掉文字中的符号
+     * @param str
+     * @return
+     */
+    public static String SQLPreProcess(String str) {
+        str = str.replaceAll("&", "&amp;");
+        str = str.replaceAll("'", "&apos;");
+        str = str.replaceAll("\"", "&quot;");
+        str = str.replaceAll("<", "&lt;");
+        str = str.replaceAll(">", "&gt;");
+        return str;
+    }
+
+    /**
+     * 把转移符转化成标准的符号
+     * @param str
+     * @return
+     */
+    public static String disTransformHtml(String str) {
+        str = str.replaceAll("&amp;", "&");
+        str = str.replaceAll("&apos;", "'");
+        str = str.replaceAll("&quot;", "\"");
+        str = str.replaceAll("&lt;", "<");
+        str = str.replaceAll("&gt;", ">");
+        return str;
+    }
     /**
      * 转换bytes为十六进制字符
      * @param bytes
