@@ -66,6 +66,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils{
         transfer2HexStr(sb, (byte) (b&0xF));
     }
 
+    /**
+     * 转为为8进制文件
+     * @param sb
+     * @param b
+     */
     private static void transfer2HexStr(StringBuffer sb, byte b) {
         if (b > (byte) 9 && b < (byte) 16) {
             switch (b) {

@@ -32,7 +32,7 @@ public class PropertiesUtils {
              * 需要区别对待
              */
             String path = PropertiesUtils.class.getClassLoader().getResource("").getPath() ;
-            if(path.indexOf("war!")  == -1){
+            if(!path.contains("war!")){
                 path =  PropertiesUtils.class.getResource("/").toURI().getPath();
             }
             List<URL> fileUrls = FileUtils.scanFileByPath(path, new FileFilter() {
@@ -44,6 +44,7 @@ public class PropertiesUtils {
                     return file.getName().endsWith(".properties");
                 }
             });
+            assert fileUrls != null;
             for(URL url : fileUrls) {
                 prop.load(url.openStream());
             }
