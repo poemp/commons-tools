@@ -1,7 +1,7 @@
 package org.poem.utils.file;
 
 import org.apache.commons.io.IOUtils;
-import org.poem.utils.StringUtils;
+import org.poem.utils.string.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

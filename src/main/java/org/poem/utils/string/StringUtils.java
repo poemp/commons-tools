@@ -1,4 +1,4 @@
-package org.poem.utils;
+package org.poem.utils.string;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
