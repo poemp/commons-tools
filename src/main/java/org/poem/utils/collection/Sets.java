@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @param <E>
  */
-public class Sets<E> extends HashSet<E> {
+public final class Sets<E> extends HashSet<E> {
 
     /**
      * 返回一个空的set

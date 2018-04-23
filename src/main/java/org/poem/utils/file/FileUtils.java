@@ -1,6 +1,7 @@
 package org.poem.utils.file;
 
 import org.apache.commons.io.IOUtils;
+import org.poem.utils.logger.LoggerUtils;
 import org.poem.utils.string.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by poem on 2016/6/18.
  */
-public class FileUtils extends org.apache.commons.io.FileUtils {
+public final class FileUtils extends org.apache.commons.io.FileUtils {
 
     /**
      * The Constant LOG.
@@ -40,6 +41,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @return 文件url地址集合
      */
     public static List<URL> scanFileByPath(String path, FileFilter fileFilter) {
+        LoggerUtils.info(path);
         if (StringUtils.isEmpty(path)) {
             return null;
         }

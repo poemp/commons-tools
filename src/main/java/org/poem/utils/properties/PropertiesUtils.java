@@ -1,8 +1,9 @@
 package org.poem.utils.properties;
 
+import org.poem.utils.collection.CollectionUtils;
 import org.poem.utils.file.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.poem.utils.file.URLUtil;
+import org.poem.utils.logger.LoggerUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -17,43 +18,32 @@ import java.util.regex.Pattern;
 /**
  * Created by poem on 2016/6/18.
  */
-public class PropertiesUtils {
-    /** The Constant LOG. */
-    private static final Logger LOG  = LoggerFactory.getLogger(PropertiesUtils.class);
+public final class PropertiesUtils {
 
     /** 加载配置文件的对象. */
     private static Properties prop = new Properties();
+
+
     static{
         try {
-            /***
-             * 记载文件的时候，在线上和开发时不一样的
-             * 首先，在开发的，整个的项目是打开的，不是关闭的，所以按照原始的方式是可以获取到文件的路径的
-             * 但是在线上的时候，打包成了war或者是jar包，那么获取文件的路径就在war内部
-             * 需要区别对待
-             */
-            String path = PropertiesUtils.class.getClassLoader().getResource("").getPath() ;
-            if(!path.contains("war!")){
-                path =  PropertiesUtils.class.getResource("/").toURI().getPath();
-            }
-            List<URL> fileUrls = FileUtils.scanFileByPath(path, new FileFilter() {
+            List<URL> fileUrls = FileUtils.scanFileByPath(URLUtil.getClassFilePath(PropertiesUtils.class), new FileFilter() {
                 @Override
                 public boolean accept(File file) {
-                    if (file.isDirectory()) {
-                        return true;
-                    }
-                    return file.getName().endsWith(".properties");
+                    return file.isDirectory() || file.getName().endsWith(".properties");
                 }
             });
-            assert fileUrls != null;
-            for(URL url : fileUrls) {
-                prop.load(url.openStream());
+            if(!CollectionUtils.isEmpty(fileUrls)){
+                for(URL url : fileUrls) {
+                    LoggerUtils.info("load properties file | " + url.getPath() );
+                    prop.load(url.openStream());
+                }
+            }else {
+                LoggerUtils.warn("there is not has any properties files");
             }
+
         } catch (IOException e) {
             e.printStackTrace();
-            LOG.error(e.getMessage(), e);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            LOG.error(e.getMessage(), e);
+            LoggerUtils.error(e.getMessage(), e);
         }
     }
 

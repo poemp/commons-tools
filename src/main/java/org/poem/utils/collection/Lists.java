@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @since java
  */
-public class Lists<E> extends ArrayList<E> {
+public final class Lists<E> extends ArrayList<E> {
 
     /**
      * 返回一个空的列表
