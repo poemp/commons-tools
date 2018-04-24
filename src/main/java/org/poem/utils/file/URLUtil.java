@@ -33,8 +33,7 @@ public final class URLUtil {
      */
     public static String getClassFilePath(Class clazz) {
         try {
-            String path =  java.net.URLDecoder.decode(getClassFile(clazz)
-                    .getAbsolutePath(), "UTF-8");
+            String path =  java.net.URLDecoder.decode(getClassFile(clazz).getAbsolutePath(), "UTF-8");
            return  path.substring(0,path.indexOf("file") == -1 ? path.length():path.indexOf("file"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -65,8 +64,7 @@ public final class URLUtil {
      */
     public static String getClassPath(Class clazz) {
         try {
-            return java.net.URLDecoder.decode(getClassPathFile(clazz)
-                    .getAbsolutePath(), "UTF-8");
+            return java.net.URLDecoder.decode(getClassPathFile(clazz).getAbsolutePath(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return "";

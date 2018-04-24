@@ -30,11 +30,6 @@ import java.util.Set;
 public final class FileUtils extends org.apache.commons.io.FileUtils {
 
     /**
-     * The Constant LOG.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(FileUtils.class);
-
-    /**
      * 禁止创建工具类的实例.
      */
     private FileUtils() {
@@ -58,7 +53,7 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
             try {
                 scanFile(rsList, rootFile.listFiles(fileFilter), fileFilter);
             } catch (MalformedURLException e) {
-                LOG.error(e.getMessage(), e);
+                LoggerUtils.error(e.getMessage(), e);
             }
         }
         return rsList;
@@ -108,7 +103,7 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
                 }
                 return fileContent;
             } catch (IOException e) {
-                LOG.error(e.getMessage(), e);
+                LoggerUtils.error(e.getMessage(), e);
             } finally {
                 if (null != fileInputStream) {
                     IOUtils.closeQuietly(fileInputStream);
@@ -134,6 +129,20 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
         return filename;
     }
 
+    /**
+     * 获取文件名称
+     * @param fileName 文件名称
+     * @return
+     */
+    public static String getFileExistName(String fileName){
+        if ((fileName != null) && (fileName.length() > 0)) {
+            int dot = fileName.lastIndexOf('.');
+            if ((dot > -1) && (dot < (fileName.length() - 1))) {
+                return fileName.substring(0,dot);
+            }
+        }
+        return fileName;
+    }
     /**
      * window 按照权限写入数据
      *
