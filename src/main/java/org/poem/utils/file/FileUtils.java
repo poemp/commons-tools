@@ -137,5 +137,63 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         }catche (IOException e){
         
         }
+        Path path = Paths.get(URI.create(""));
+		Set<OpenOption> options = new HashSet<>();
+		options.add(StandardOpenOption.CREATE_NEW);
+		options.add(StandardOpenOption.WRITE);
+
+		UserPrincipalLookupService service = path.getFileSystem().getUserPrincipalLookupService();
+		UserPrincipal user = service.lookupPrincipalByGroupName("Uses");
+		UserPrincipal systemGroup = service.lookupPrincipalByGroupName("SYSTEM");
+
+		final AclEntry aclEntry = AclEntry
+				.newBuilder()
+				.setType(AclEntryType.ALLOW)
+				.setPrincipal(user)
+				.setPermissions(AclEntryPermission.READ_DATA,
+						AclEntryPermission.READ_ATTRIBUTES,
+						AclEntryPermission.READ_NAMED_ATTRS,
+						AclEntryPermission.READ_ACL,
+						AclEntryPermission.WRITE_DATA,
+						AclEntryPermission.WRITE_ATTRIBUTES,
+						AclEntryPermission.WRITE_NAMED_ATTRS,
+						AclEntryPermission.WRITE_ACL,
+						AclEntryPermission.SYNCHRONIZE).build();
+
+		final AclEntry aclEntry1 = AclEntry.newBuilder()
+				.setType(AclEntryType.ALLOW)
+				.setPrincipal(systemGroup)
+				.setPermissions(AclEntryPermission.READ_DATA,
+						AclEntryPermission.READ_ATTRIBUTES,
+						AclEntryPermission.READ_NAMED_ATTRS,
+						AclEntryPermission.WRITE_DATA).build();
+
+		FileAttribute<List<AclEntry>> aclattribute = new FileAttribute<List<AclEntry>>() {
+			@Override
+			public String name() {
+				return "acl:acl";
+			}
+
+			@Override
+			public List<AclEntry> value() {
+				ArrayList<AclEntry> aclEntryArrayList = new ArrayList<>();
+				aclEntryArrayList.add(aclEntry);
+				aclEntryArrayList.add(aclEntry1);
+				return aclEntryArrayList;
+			}
+		};
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+		final String str = "abc";
+		byte[] a  = str.getBytes();
+		byteBuffer.put(a);
+		SeekableByteChannel seekableByteChannel = null;
+		try{
+			seekableByteChannel = Files.newByteChannel(path,options,aclattribute);
+			seekableByteChannel.write(byteBuffer);
+		}catch ( IOException i){
+
+		}
+        
     }
 }
