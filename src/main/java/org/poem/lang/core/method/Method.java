@@ -16,7 +16,7 @@ public class Method {
      * 只有一个参数参数
      * 方法返回数据类型
      */
-    private ReturnPara returnPara;
+    private MethodReturnType returnPara;
 
     /**
      * 多个方法参数
@@ -39,11 +39,11 @@ public class Method {
         this.name = name;
     }
 
-    public ReturnPara getReturnPara() {
+    public MethodReturnType getReturnPara() {
         return returnPara;
     }
 
-    public void setReturnPara(ReturnPara returnPara) {
+    public void setReturnPara(MethodReturnType returnPara) {
         this.returnPara = returnPara;
     }
 

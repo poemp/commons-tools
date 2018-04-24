@@ -11,6 +11,10 @@ import java.util.List;
 public class JavaClass {
 
     /**
+     * 父级类
+     */
+    private List<JavaClass> parentClass;
+    /**
      * 当前类所依赖的其他类
      */
     private List<JavaClass> javaClasses;
@@ -31,7 +35,7 @@ public class JavaClass {
     private String path;
 
     /**
-     * Java 方法
+     * Java 属性
      */
     private List<Field> fields;
 
@@ -39,6 +43,14 @@ public class JavaClass {
      * java 方法
      */
     private List<Method> methods;
+
+    public List<JavaClass> getParentClass() {
+        return parentClass;
+    }
+
+    public void setParentClass(List<JavaClass> parentClass) {
+        this.parentClass = parentClass;
+    }
 
     public List<JavaClass> getJavaClasses() {
         return javaClasses;
@@ -70,6 +82,14 @@ public class JavaClass {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public List<Field> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<Field> fields) {
+        this.fields = fields;
     }
 
     public List<Method> getMethods() {

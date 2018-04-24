@@ -3,7 +3,7 @@ package org.poem.lang.core.method;
 /**
  * 方法
  */
-public class ReturnPara {
+public class MethodReturnType {
 
     /**
      * 方法返回参数

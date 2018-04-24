@@ -121,10 +121,4 @@ public class SearchJava {
         }
         return file.getPath();
     }
-
-    public static void main(String[] args) {
-
-        List<String> file = SearchJava.getInstance("E:\\12-myFolder\\05-commons-tools\\commons-tools\\src\\main\\java\\org\\poem").search();
-        file.forEach(System.err::println);
-    }
 }

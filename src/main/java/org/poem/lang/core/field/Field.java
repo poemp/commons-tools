@@ -17,6 +17,7 @@ public class Field {
      */
     private JavaClass javaClass;
 
+
     public String getName() {
         return name;
     }
