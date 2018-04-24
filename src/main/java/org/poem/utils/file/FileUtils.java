@@ -124,4 +124,18 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         }
         return filename;
     }
+    
+    public static boolean filePermission(String path){
+        Path path = Paths.get(path);
+        Set<OpenOptions> opentions = Sets.empty();
+        options.put(StandardOpenOptions.CREATE_NEW);
+        options.put(StandardOpenOptions.APPEN);
+        Set<PosixFilePerssion> perms = PosixFilePersission.formString("rw-------");
+        FileAttribute<Set<PosixFilePermission>? = PosixFilePermission.asFileAttribute(perms);
+        try(SeekebleByteChannel sbc = Files.newByteChannel(file, options, attr)){
+        
+        }catche (IOException e){
+        
+        }
+    }
 }
