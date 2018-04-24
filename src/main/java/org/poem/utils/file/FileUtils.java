@@ -1,6 +1,7 @@
 package org.poem.utils.file;
 
 import org.apache.commons.io.IOUtils;
+import org.poem.utils.collection.Sets;
 import org.poem.utils.logger.LoggerUtils;
 import org.poem.utils.string.StringUtils;
 import org.slf4j.Logger;
@@ -11,11 +12,17 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by poem on 2016/6/18.
@@ -126,76 +133,95 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
         }
         return filename;
     }
-    
-    public static boolean filePermission(String path){
-        Path path = Paths.get(path);
-        Set<OpenOptions> opentions = Sets.empty();
-        options.put(StandardOpenOptions.CREATE_NEW);
-        options.put(StandardOpenOptions.APPEN);
-        Set<PosixFilePerssion> perms = PosixFilePersission.formString("rw-------");
-        FileAttribute<Set<PosixFilePermission>? = PosixFilePermission.asFileAttribute(perms);
-        try(SeekebleByteChannel sbc = Files.newByteChannel(file, options, attr)){
-        
-        }catche (IOException e){
-        
+
+    /**
+     * window 按照权限写入数据
+     *
+     * @param path       路径
+     * @param byteBuffer 写入的数据
+     * @throws IOException
+     */
+    public static void fileWindowsWritePermission(Path path, ByteBuffer byteBuffer) throws IOException {
+        Set<OpenOption> options = new HashSet<>();
+        options.add(StandardOpenOption.CREATE_NEW);
+        options.add(StandardOpenOption.WRITE);
+
+        UserPrincipalLookupService service = path.getFileSystem().getUserPrincipalLookupService();
+        UserPrincipal user = service.lookupPrincipalByGroupName("Uses");
+        UserPrincipal systemGroup = service.lookupPrincipalByGroupName("SYSTEM");
+
+        final AclEntry aclEntry = AclEntry
+                .newBuilder()
+                .setType(AclEntryType.ALLOW)
+                .setPrincipal(user)
+                .setPermissions(AclEntryPermission.READ_DATA,
+                        AclEntryPermission.READ_ATTRIBUTES,
+                        AclEntryPermission.READ_NAMED_ATTRS,
+                        AclEntryPermission.READ_ACL,
+                        AclEntryPermission.WRITE_DATA,
+                        AclEntryPermission.WRITE_ATTRIBUTES,
+                        AclEntryPermission.WRITE_NAMED_ATTRS,
+                        AclEntryPermission.WRITE_ACL,
+                        AclEntryPermission.SYNCHRONIZE).build();
+
+        final AclEntry aclEntry1 = AclEntry.newBuilder()
+                .setType(AclEntryType.ALLOW)
+                .setPrincipal(systemGroup)
+                .setPermissions(AclEntryPermission.READ_DATA,
+                        AclEntryPermission.READ_ATTRIBUTES,
+                        AclEntryPermission.READ_NAMED_ATTRS,
+                        AclEntryPermission.WRITE_DATA).build();
+
+        FileAttribute<List<AclEntry>> aclattribute = new FileAttribute<List<AclEntry>>() {
+            @Override
+            public String name() {
+                return "acl:acl";
+            }
+
+            @Override
+            public List<AclEntry> value() {
+                ArrayList<AclEntry> aclEntryArrayList = new ArrayList<>();
+                aclEntryArrayList.add(aclEntry);
+                aclEntryArrayList.add(aclEntry1);
+                return aclEntryArrayList;
+            }
+        };
+
+        SeekableByteChannel seekableByteChannel = null;
+        try {
+            seekableByteChannel = Files.newByteChannel(path, options, aclattribute);
+            seekableByteChannel.write(byteBuffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+            LoggerUtils.error(e);
+        } finally {
+            IOUtils.closeQuietly(seekableByteChannel);
         }
-        Path path = Paths.get(URI.create(""));
-		Set<OpenOption> options = new HashSet<>();
-		options.add(StandardOpenOption.CREATE_NEW);
-		options.add(StandardOpenOption.WRITE);
+    }
 
-		UserPrincipalLookupService service = path.getFileSystem().getUserPrincipalLookupService();
-		UserPrincipal user = service.lookupPrincipalByGroupName("Uses");
-		UserPrincipal systemGroup = service.lookupPrincipalByGroupName("SYSTEM");
 
-		final AclEntry aclEntry = AclEntry
-				.newBuilder()
-				.setType(AclEntryType.ALLOW)
-				.setPrincipal(user)
-				.setPermissions(AclEntryPermission.READ_DATA,
-						AclEntryPermission.READ_ATTRIBUTES,
-						AclEntryPermission.READ_NAMED_ATTRS,
-						AclEntryPermission.READ_ACL,
-						AclEntryPermission.WRITE_DATA,
-						AclEntryPermission.WRITE_ATTRIBUTES,
-						AclEntryPermission.WRITE_NAMED_ATTRS,
-						AclEntryPermission.WRITE_ACL,
-						AclEntryPermission.SYNCHRONIZE).build();
+    /**
+     * 写入数据
+     *
+     * @param path       文件的路劲
+     * @param byteBuffer 写入数据
+     */
+    public static void fileLinuxWritePermission(Path path, ByteBuffer byteBuffer) {
+        Set<OpenOption> options = Sets.empty();
+        options.add(StandardOpenOption.CREATE_NEW);
+        options.add(StandardOpenOption.APPEND);
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rw-------");
+        FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
+        SeekableByteChannel sbc = null;
+        try {
+            sbc = Files.newByteChannel(path, options, attr);
+            sbc.write(byteBuffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+            LoggerUtils.error(e);
+        } finally {
+            IOUtils.closeQuietly(sbc);
+        }
 
-		final AclEntry aclEntry1 = AclEntry.newBuilder()
-				.setType(AclEntryType.ALLOW)
-				.setPrincipal(systemGroup)
-				.setPermissions(AclEntryPermission.READ_DATA,
-						AclEntryPermission.READ_ATTRIBUTES,
-						AclEntryPermission.READ_NAMED_ATTRS,
-						AclEntryPermission.WRITE_DATA).build();
-
-		FileAttribute<List<AclEntry>> aclattribute = new FileAttribute<List<AclEntry>>() {
-			@Override
-			public String name() {
-				return "acl:acl";
-			}
-
-			@Override
-			public List<AclEntry> value() {
-				ArrayList<AclEntry> aclEntryArrayList = new ArrayList<>();
-				aclEntryArrayList.add(aclEntry);
-				aclEntryArrayList.add(aclEntry1);
-				return aclEntryArrayList;
-			}
-		};
-
-		ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-		final String str = "abc";
-		byte[] a  = str.getBytes();
-		byteBuffer.put(a);
-		SeekableByteChannel seekableByteChannel = null;
-		try{
-			seekableByteChannel = Files.newByteChannel(path,options,aclattribute);
-			seekableByteChannel.write(byteBuffer);
-		}catch ( IOException i){
-
-		}
-        
     }
 }
