@@ -20,6 +20,10 @@ public class JavaClass {
     private List<JavaClass> javaClasses;
 
     /**
+     * 类的注解
+     */
+    private List<Annotation> annotations;
+    /**
      * java 类的信息
      */
     private Class aClass;
@@ -43,6 +47,14 @@ public class JavaClass {
      * java 方法
      */
     private List<Method> methods;
+
+    public List<Annotation> getAnnotations() {
+        return annotations;
+    }
+
+    public void setAnnotations(List<Annotation> annotations) {
+        this.annotations = annotations;
+    }
 
     public List<JavaClass> getParentClass() {
         return parentClass;

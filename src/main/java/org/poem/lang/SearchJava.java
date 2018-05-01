@@ -97,6 +97,7 @@ public class SearchJava {
 
     /**
      * 返回文件的信息
+     *
      * @param file
      * @return
      */
@@ -108,7 +109,7 @@ public class SearchJava {
             bufferedInputStream = new BufferedReader(new FileReader(file));
             packageName = bufferedInputStream.readLine();
             packageName = packageName.substring(7);
-            packageName = packageName.substring(0,packageName.length() - 1);
+            packageName = packageName.substring(0, packageName.length() - 1);
             return packageName.trim() + "." + fileName;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

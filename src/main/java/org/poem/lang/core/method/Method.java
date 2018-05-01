@@ -1,5 +1,7 @@
 package org.poem.lang.core.method;
 
+import org.poem.lang.core.Annotation;
+
 import java.util.List;
 
 /**
@@ -30,6 +32,19 @@ public class Method {
      * 方法所抛出的异常，和方法里面抛出异常
      */
     private List<MethodException> methodExceptions;
+
+    /**
+     * 方法的注解
+     */
+    private List<Annotation> annotations;
+
+    public List<Annotation> getAnnotations() {
+        return annotations;
+    }
+
+    public void setAnnotations(List<Annotation> annotations) {
+        this.annotations = annotations;
+    }
 
     public String getName() {
         return name;

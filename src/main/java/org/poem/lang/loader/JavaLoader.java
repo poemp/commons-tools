@@ -37,11 +37,7 @@ public class JavaLoader {
      * @return
      */
     public List<JavaClass> getJavaClass(){
-        Class clazz = this.getClass();
-        Method[] methods = clazz.getMethods();
-        Field[] fields = clazz.getFields();
-        Package packag = clazz.getPackage();
-        Annotation[] annotations = clazz.getAnnotations();
+
         return null;
     }
 
@@ -54,6 +50,10 @@ public class JavaLoader {
         return new JavaLoader(classNames);
     }
 
+    /**
+     * 类
+     * @param args
+     */
     public static void main(String[] args) {
         String path  = "E:\\12-myFolder\\05-commons-tools\\commons-tools\\src\\main\\java\\org\\poem";
         List<String> file = SearchJava.getInstance(path).search();
