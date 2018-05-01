@@ -1,6 +1,8 @@
 package org.poem.lang.machine;
 
+import org.poem.lang.context.JavaContext;
 import org.poem.lang.core.method.MethodException;
+import org.poem.lang.loader.JavaLoaderMachine;
 import org.poem.utils.JavaMachineUtils;
 import org.poem.utils.collection.Lists;
 
@@ -27,17 +29,19 @@ public class ForExceptionType {
 
     /**
      * 创建异常方法JavaClass
+     *
      * @return
      */
-    public List<MethodException> build(){
+    public List<MethodException> build() {
         List<MethodException> methodExceptions = Lists.empty();
         MethodException methodException;
-        if(this.classes != null && this.classes.length > 0 ){
+        if (this.classes != null && this.classes.length > 0) {
             for (Class aClass : this.classes) {
                 methodException = new MethodException();
                 methodException.setName(aClass.getName());
-                System.err.println(aClass.getName());
                 methodException.setException(JavaMachineUtils.buildClass(aClass));
+                methodExceptions.add(methodException);
+                methodException = JavaContext.canPush(aClass, methodException);
                 methodExceptions.add(methodException);
             }
             return methodExceptions;

@@ -5,6 +5,7 @@ import org.poem.lang.core.JavaClass;
 import org.poem.lang.stream.JavaClassFunction;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +37,11 @@ public class JavaLoader {
      * @return
      */
     public List<JavaClass> getJavaClass(){
-        return this.classNames.stream().map(new JavaClassFunction()).collect(Collectors.toList());
+        return this.classNames
+                .stream()
+                .map(new JavaClassFunction())
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     /**
