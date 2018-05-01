@@ -1,20 +1,36 @@
 package org.poem.lang.core.method;
 
+import org.poem.lang.core.JavaClass;
+
 /**
  * 方法
  */
 public class MethodReturnType {
 
     /**
-     * 方法返回参数
+     * java 方法返回的类型
      */
-    private Class returnClass;
+    private String name;
 
-    public Class getReturnClass() {
-        return returnClass;
+    /**
+     *  java 返回类型
+     */
+    private JavaClass javaClass;
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setReturnClass(Class returnClass) {
-        this.returnClass = returnClass;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public JavaClass getJavaClass() {
+        return javaClass;
+    }
+
+    public void setJavaClass(JavaClass javaClass) {
+        this.javaClass = javaClass;
     }
 }

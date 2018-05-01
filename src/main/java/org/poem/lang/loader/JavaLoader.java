@@ -3,9 +3,6 @@ package org.poem.lang.loader;
 import org.poem.lang.SearchJava;
 import org.poem.lang.core.JavaClass;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**

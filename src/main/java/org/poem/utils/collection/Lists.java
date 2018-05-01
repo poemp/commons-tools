@@ -24,17 +24,17 @@ public final class Lists<E> extends ArrayList<E> {
 
     /**
      * 构造一个新的list
+     *
      * @param args 数组
-     * @param <T> 数据类型
+     * @param <T>  数据类型
      * @return
      */
-    public static <T> List<T> asList(T ... args){
-        if(null == args){
-            return  Lists.empty();
+    public static <T> List<T> asList(T... args) {
+        if (null == args) {
+            return Lists.empty();
         }
         List<T> newList = new ArrayList<>(args.length);
         newList.addAll(Arrays.asList(args));
         return newList;
     }
-
 }

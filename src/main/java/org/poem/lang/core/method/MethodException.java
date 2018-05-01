@@ -8,9 +8,22 @@ import org.poem.lang.core.JavaClass;
 public class MethodException {
 
     /**
+     * 异常的名称
+     */
+    private String name;
+
+    /**
      * 方法抛出的异常
      */
     private JavaClass exception;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public JavaClass getException() {
         return exception;

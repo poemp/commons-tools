@@ -13,7 +13,7 @@ public class JavaClass {
     /**
      * 父级类
      */
-    private List<JavaClass> parentClass;
+    private JavaClass superClass;
     /**
      * 当前类所依赖的其他类
      */
@@ -56,12 +56,12 @@ public class JavaClass {
         this.annotations = annotations;
     }
 
-    public List<JavaClass> getParentClass() {
-        return parentClass;
+    public JavaClass getSuperClass() {
+        return superClass;
     }
 
-    public void setParentClass(List<JavaClass> parentClass) {
-        this.parentClass = parentClass;
+    public void setSuperClass(JavaClass superClass) {
+        this.superClass = superClass;
     }
 
     public List<JavaClass> getJavaClasses() {
