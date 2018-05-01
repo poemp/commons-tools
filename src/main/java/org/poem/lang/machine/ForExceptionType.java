@@ -1,6 +1,5 @@
 package org.poem.lang.machine;
 
-import org.poem.lang.core.JavaClass;
 import org.poem.lang.core.method.MethodException;
 import org.poem.utils.JavaMachineUtils;
 import org.poem.utils.collection.Lists;
@@ -37,6 +36,7 @@ public class ForExceptionType {
             for (Class aClass : this.classes) {
                 methodException = new MethodException();
                 methodException.setName(aClass.getName());
+                System.err.println(aClass.getName());
                 methodException.setException(JavaMachineUtils.buildClass(aClass));
                 methodExceptions.add(methodException);
             }

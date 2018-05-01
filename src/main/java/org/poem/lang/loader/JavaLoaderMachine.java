@@ -4,6 +4,7 @@ import org.poem.lang.core.JavaClass;
 import org.poem.lang.stream.FieldFunction;
 import org.poem.lang.stream.MethodFunction;
 import org.poem.utils.JavaMachineUtils;
+import org.poem.utils.collection.CollectionUtils;
 import org.poem.utils.collection.Lists;
 
 import java.lang.reflect.Field;
@@ -34,12 +35,25 @@ public class JavaLoaderMachine {
     public JavaClass build() {
         JavaClass javaClass = new JavaClass();
         javaClass.setName(this.clazz.getName());
-        javaClass.setPath(this.clazz.getPackage().getName());
-        javaClass.setMethods(this.getMethod());
-        javaClass.setFields(this.getField());
+        if(null != this.clazz.getPackage()){
+            javaClass.setPath(this.clazz.getPackage().getName());
+        }
+        //方法
+        List<org.poem.lang.core.method.Method> methods = this.getMethod();
+        if(CollectionUtils.isNotEmpty(methods)){
+            javaClass.setMethods(methods);
+        }
+        //属性
+        List<org.poem.lang.core.field.Field> fieldList = this.getField();
+        if(CollectionUtils.isNotEmpty(fieldList)){
+            javaClass.setFields(fieldList);
+        }
+        //注释
         javaClass.setAnnotations(JavaMachineUtils.annotationsType(clazz.getAnnotations()));
         javaClass.setaClass(this.clazz);
-        javaClass.setSuperClass(new JavaLoaderMachine(this.clazz.getSuperclass()).build());
+        if(null != this.clazz.getSuperclass()){
+            javaClass.setSuperClass(new JavaLoaderMachine(this.clazz.getSuperclass()).build());
+        }
         return  javaClass;
     }
 
@@ -63,7 +77,7 @@ public class JavaLoaderMachine {
      */
     private List<org.poem.lang.core.method.Method> getMethod() {
         List<org.poem.lang.core.method.Method> methodList = Lists.empty();
-        Method[] methods = clazz.getMethods();
+        Method[] methods = this.clazz.getMethods();
         if (null != methods && methods.length > 0) {
             return Lists.asList(methods).stream().map(new MethodFunction()).collect(Collectors.toList());
         }

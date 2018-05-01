@@ -14,7 +14,6 @@ import java.util.function.Function;
 public class MethodFunction implements Function<Method, org.poem.lang.core.method.Method> {
 
     /**
-     *
      * @param m
      * @return
      */
@@ -22,10 +21,23 @@ public class MethodFunction implements Function<Method, org.poem.lang.core.metho
     public org.poem.lang.core.method.Method apply(Method m) {
         org.poem.lang.core.method.Method poemMethod = new org.poem.lang.core.method.Method();
         poemMethod.setName(m.getName());
-        poemMethod.setMethodExceptions(new ForExceptionType(m.getExceptionTypes()).build());
-        poemMethod.setReturnPara(new ForReturnType(m.getReturnType()).build());
-        poemMethod.setMethodParameters(new ForParameter(m.getParameters()).build());
-        poemMethod.setAnnotations(new ForAnnotations(m.getAnnotations()).build());
+        //方法异常
+        if (null != m.getExceptionTypes()) {
+            poemMethod.setMethodExceptions(new ForExceptionType(m.getExceptionTypes()).build());
+        }
+        //方法返回类型
+        if (null != m.getReturnType()) {
+            poemMethod.setReturnPara(new ForReturnType(m.getReturnType()).build());
+        }
+        //方法参数
+        if (null != m.getParameters()) {
+            poemMethod.setMethodParameters(new ForParameter(m.getParameters()).build());
+        }
+        //注释
+        if (null != m.getAnnotations()) {
+            poemMethod.setAnnotations(new ForAnnotations(m.getAnnotations()).build());
+        }
+
         return poemMethod;
     }
 }

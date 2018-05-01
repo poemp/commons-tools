@@ -2,8 +2,10 @@ package org.poem.lang.loader;
 
 import org.poem.lang.SearchJava;
 import org.poem.lang.core.JavaClass;
+import org.poem.lang.stream.JavaClassFunction;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Java Class 加载
@@ -34,8 +36,7 @@ public class JavaLoader {
      * @return
      */
     public List<JavaClass> getJavaClass(){
-
-        return null;
+        return this.classNames.stream().map(new JavaClassFunction()).collect(Collectors.toList());
     }
 
     /**
@@ -55,6 +56,7 @@ public class JavaLoader {
         String path  = "E:\\12-myFolder\\05-commons-tools\\commons-tools\\src\\main\\java\\org\\poem";
         List<String> file = SearchJava.getInstance(path).search();
         JavaLoader javaLoader = JavaLoader.getInstance(file);
-        javaLoader.getJavaClass();
+        List<JavaClass> javaClasses = javaLoader.getJavaClass();
+        Integer.valueOf("1");
     }
 }
