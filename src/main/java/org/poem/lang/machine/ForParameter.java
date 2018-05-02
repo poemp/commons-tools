@@ -37,7 +37,7 @@ public class ForParameter {
             for (Parameter parameter : parameters) {
                 methodParameter = new MethodParameter();
                 methodParameter = JavaContext.canPush(parameter.getType(),methodParameter);
-                methodParameter.setName(parameter.getName());
+                methodParameter.setName(parameter.getParameterizedType().getTypeName());
                 methodParameter.setClazz(JavaMachineUtils.buildClass(parameter.getType()));
                 methodParameter.setAnnotations(JavaMachineUtils.annotationsType(parameter.getAnnotations()));
                 methodParameters.add(methodParameter);
