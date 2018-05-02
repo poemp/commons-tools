@@ -7,6 +7,6 @@ public final class CollectionUtils extends org.apache.commons.collections.Collec
 
 
     public static Boolean isNotEmpty(Map<String, Object> loaderClass) {
-        return loaderClass != null && loaderClass.isEmpty();
+        return loaderClass != null && !loaderClass.isEmpty();
     }
 }
