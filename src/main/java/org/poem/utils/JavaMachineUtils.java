@@ -2,6 +2,7 @@ package org.poem.utils;
 
 import org.poem.lang.core.JavaClass;
 import org.poem.lang.loader.JavaLoaderMachine;
+import org.poem.lang.machine.ForAnnotationFilter;
 import org.poem.lang.stream.AnnotationFunction;
 import org.poem.utils.collection.Lists;
 
@@ -45,7 +46,8 @@ public class JavaMachineUtils {
         if (null != clazzs && clazzs.length > 0) {
             return Lists.asList(clazzs)
                     .stream()
-                    .filter(clazz -> clazz.annotationType().getName().equals(own.getName()))
+                    .filter(c -> new ForAnnotationFilter().test(c))
+                    .filter(clazz -> !clazz.annotationType().getName().equals(own.getName()))
                     .map(new AnnotationFunction())
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());

@@ -1,5 +1,6 @@
 package org.poem.lang.stream;
 
+import org.poem.lang.annotation.JavaAnnotationContext;
 import org.poem.utils.JavaMachineUtils;
 
 import java.lang.annotation.Annotation;
@@ -10,6 +11,7 @@ public class AnnotationFunction implements Function<Annotation, org.poem.lang.co
     public org.poem.lang.core.Annotation apply(Annotation annotation) {
         org.poem.lang.core.Annotation poemAnnotation = new org.poem.lang.core.Annotation();
         poemAnnotation.setName(annotation.annotationType().getName());
+        JavaAnnotationContext.put(annotation.annotationType().getName());
         poemAnnotation.setJavaClass(JavaMachineUtils.annotationType(annotation.annotationType()));
         return poemAnnotation;
     }
