@@ -14,7 +14,12 @@ public class JavaClassFunction implements Function<String , JavaClass> {
     @Override
     public JavaClass apply(String s) {
         try {
-            return  JavaContext.canPush(s,new JavaLoaderMachine(Class.forName(s)).build());
+            JavaClass javaClass = JavaContext.get(s);
+            if(javaClass != null){
+                return  javaClass;
+            }
+
+            return  new JavaLoaderMachine(Class.forName(s)).build();
         } catch (ClassNotFoundException e) {
             LoggerUtils.error(e);
             e.printStackTrace();

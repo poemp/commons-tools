@@ -41,7 +41,6 @@ public class ForExceptionType {
                 methodException.setName(aClass.getName());
                 methodException.setException(JavaMachineUtils.buildClass(aClass));
                 methodExceptions.add(methodException);
-                methodException = JavaContext.canPush(aClass.getName(),methodException);
                 methodExceptions.add(methodException);
             }
             return methodExceptions;

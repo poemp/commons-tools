@@ -1,6 +1,6 @@
 package org.poem.lang.context;
 
-import org.poem.utils.collection.CollectionUtils;
+import org.poem.lang.core.JavaClass;
 import org.poem.utils.collection.Maps;
 import org.poem.utils.logger.LoggerUtils;
 
@@ -9,32 +9,33 @@ import java.util.Map;
 public class JavaContext {
 
     /**
-     * 加载类
+     * 所有的加载类的集合
      */
-    private static Map<String, Object> LOADER_CLASS = Maps.emptys();
+    private static Map<String, JavaClass> MAP;
 
-    /**
-     * 是不是已经遍历
-     *
-     * @param classPackage
-     * @return
-     */
-    public static <K extends String, V extends Object> V canPush(K classPackage, V value) {
-        Boolean has = CollectionUtils.isNotEmpty(LOADER_CLASS) && LOADER_CLASS.get(classPackage) != null;
-        if(!has){
-            LoggerUtils.info("加载类：" + classPackage);
-            LOADER_CLASS.put(classPackage,value);
-        }
-        return has ? (V) LOADER_CLASS.get(classPackage) : value;
+
+    static {
+        JavaContext.MAP = Maps.emptys();
     }
 
     /**
-     * 是不是已经遍历
+     * 是否存在
      *
-     * @param classPackage
+     * @param className
      * @return
      */
-    public static <K extends Class, V extends Object> V canPush(K classPackage, V value) {
-        return  JavaContext.canPush(classPackage.getName(),value);
+    public static JavaClass get(String className) {
+        return MAP.get(className);
+    }
+
+    /**
+     * 保存数据
+     *
+     * @param name
+     * @param javaClass
+     */
+    public static void set(String name, JavaClass javaClass) {
+        LoggerUtils.info(name);
+        MAP.put(name, javaClass);
     }
 }

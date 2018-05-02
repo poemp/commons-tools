@@ -1,7 +1,5 @@
 package org.poem.lang.machine;
 
-import org.poem.lang.context.JavaContext;
-import org.poem.lang.core.Annotation;
 import org.poem.lang.core.method.MethodParameter;
 import org.poem.utils.JavaMachineUtils;
 import org.poem.utils.collection.Lists;
@@ -36,10 +34,9 @@ public class ForParameter {
         if(this.parameters != null && this.parameters.length > 0){
             for (Parameter parameter : parameters) {
                 methodParameter = new MethodParameter();
-                methodParameter = JavaContext.canPush(parameter.getType(),methodParameter);
                 methodParameter.setName(parameter.getParameterizedType().getTypeName());
                 methodParameter.setClazz(JavaMachineUtils.buildClass(parameter.getType()));
-                methodParameter.setAnnotations(JavaMachineUtils.annotationsType(parameter.getAnnotations()));
+                methodParameter.setAnnotations(JavaMachineUtils.annotationsType(null,parameter.getAnnotations()));
                 methodParameters.add(methodParameter);
             }
             return methodParameters;

@@ -3,6 +3,7 @@ package org.poem.lang.loader;
 import org.poem.lang.SearchJava;
 import org.poem.lang.core.JavaClass;
 import org.poem.lang.stream.JavaClassFunction;
+import org.poem.utils.collection.Lists;
 
 import java.util.List;
 import java.util.Objects;

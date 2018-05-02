@@ -1,7 +1,6 @@
 package org.poem.lang.stream;
 
 
-import org.poem.lang.context.JavaContext;
 import org.poem.lang.machine.ForAnnotations;
 import org.poem.utils.JavaMachineUtils;
 
@@ -23,7 +22,7 @@ public class FieldFunction implements Function<Field, org.poem.lang.core.field.F
         poemField.setName(field.getName());
         poemField.setJavaClass(JavaMachineUtils.buildClass(field.getClass()));
         poemField.setAnnotations(new ForAnnotations(field.getDeclaredAnnotations()).build());
-        return JavaContext.canPush(field.getClass(), poemField);
+        return poemField;
 
     }
 }

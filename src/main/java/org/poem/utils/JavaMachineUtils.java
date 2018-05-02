@@ -34,15 +34,18 @@ public class JavaMachineUtils {
 
 
     /**
-     * 类型
-     *
      * @param clazzs
      * @return
+     * @Documented
+     * @Retention(RetentionPolicy.RUNTIME)
+     * @Target({ElementType.ANNOTATION_TYPE}) public @interface Documented {
+     * }
      */
-    public static List<org.poem.lang.core.Annotation> annotationsType(Annotation[] clazzs) {
+    public static List<org.poem.lang.core.Annotation> annotationsType(Class own, Annotation[] clazzs) {
         if (null != clazzs && clazzs.length > 0) {
-            return  Lists.asList(clazzs)
+            return Lists.asList(clazzs)
                     .stream()
+                    .filter(clazz -> clazz.annotationType().getName().equals(own.getName()))
                     .map(new AnnotationFunction())
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());

@@ -40,7 +40,11 @@ public class JavaLoaderMachine {
      * @return
      */
     public JavaClass build() {
-        JavaClass javaClass = new JavaClass();
+        JavaClass javaClass = JavaContext.get(this.clazz.getName());
+        if(javaClass != null){
+            return  javaClass;
+        }
+        javaClass = new JavaClass();
         javaClass.setName(this.clazz.getName());
         if (null != this.clazz.getPackage()) {
             javaClass.setPath(this.clazz.getPackage().getName());
@@ -56,13 +60,13 @@ public class JavaLoaderMachine {
             javaClass.setFields(fieldList);
         }
         //注释
-        javaClass.setAnnotations(JavaMachineUtils.annotationsType(clazz.getAnnotations()));
+        javaClass.setAnnotations(JavaMachineUtils.annotationsType(clazz,clazz.getAnnotations()));
         javaClass.setaClass(this.clazz);
         if (null != this.clazz.getSuperclass()) {
             JavaLoaderMachine javaLoaderMachine = new JavaLoaderMachine(this.clazz.getSuperclass());
-            javaLoaderMachine = JavaContext.canPush(this.clazz.getSuperclass(), javaLoaderMachine);
             javaClass.setSuperClass(javaLoaderMachine.build());
         }
+        JavaContext.set(this.clazz.getName(),javaClass);
         return javaClass;
     }
 
@@ -73,7 +77,9 @@ public class JavaLoaderMachine {
     private List<org.poem.lang.core.field.Field> getField() {
         Field[] fields = clazz.getFields();
         if (null != fields && fields.length > 0) {
-            return Lists.asList(fields).stream()
+            return Lists.asList(fields)
+                    .stream()
+                    .filter(field -> !field.getClass().getName().equals(this.clazz.getName()))
                     .map(new FieldFunction())
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
@@ -87,7 +93,6 @@ public class JavaLoaderMachine {
      * @return
      */
     private List<org.poem.lang.core.method.Method> getMethod() {
-        List<org.poem.lang.core.method.Method> methodList = Lists.empty();
         Method[] methods = this.clazz.getMethods();
         if (null != methods && methods.length > 0) {
             return Lists.asList(methods)
@@ -96,6 +101,6 @@ public class JavaLoaderMachine {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
-        return methodList;
+        return null;
     }
 }
