@@ -26,6 +26,7 @@ public class JavaLoader {
 
     /**
      * constructor
+     *
      * @param classNames
      */
     private JavaLoader(List<String> classNames) {
@@ -35,9 +36,10 @@ public class JavaLoader {
 
     /**
      * 加载类
+     *
      * @return
      */
-    public List<JavaClass> getJavaClass(){
+    public List<JavaClass> getJavaClass() {
         return this.classNames
                 .stream()
                 .map(new JavaClassFunction())
@@ -47,22 +49,11 @@ public class JavaLoader {
 
     /**
      * 组装数据
+     *
      * @param classNames
      * @return
      */
     public static JavaLoader getInstance(List<String> classNames) {
         return new JavaLoader(classNames);
-    }
-
-    /**
-     * 类
-     * @param args
-     */
-    public static void main(String[] args) {
-        String path  = "E:\\12-myFolder\\05-commons-tools\\commons-tools\\src\\main\\java\\org\\poem";
-        List<String> file = SearchJava.getInstance(path).search();
-        JavaLoader javaLoader = JavaLoader.getInstance(file);
-        List<JavaClass> javaClasses = javaLoader.getJavaClass();
-        Integer.valueOf("1");
     }
 }
