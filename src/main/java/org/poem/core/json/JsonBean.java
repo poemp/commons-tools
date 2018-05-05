@@ -36,4 +36,18 @@ public class JsonBean implements Serializable {
     public void setResult(Object result) {
         this.result = result;
     }
+
+    public JsonBean() {
+    }
+
+    public JsonBean(Integer status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public JsonBean(Integer status, String message, Object result) {
+        this.status = status;
+        this.message = message;
+        this.result = result;
+    }
 }
