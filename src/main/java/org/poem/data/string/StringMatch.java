@@ -9,6 +9,7 @@ import org.poem.utils.string.StringUtils;
  */
 public class StringMatch {
 
+   
     /**
      * 目标串
      */
@@ -107,6 +108,18 @@ public class StringMatch {
     }
 
     /**
+     * 打印字符串
+     *
+     * @param chars
+     */
+    private static String printArray(char[] chars) {
+        if (chars != null && chars.length > 0) {
+            return new String(chars);
+        }
+        return "";
+    }
+
+    /**
      * 下一个位置 移动的距离
      *
      * @param dest         原始字符串
@@ -117,19 +130,20 @@ public class StringMatch {
      */
     private static int next(char[] dest, char[] match, int currentIndex, int matchIndex) throws ParameterException {
         char[] newMatch = substring(match, 0, matchIndex);
-        for(int i = currentIndex ; i < dest.length;i++){
+        for (int i = currentIndex; i < dest.length; i++) {
             boolean mat = true;
-            for(int  j = 0 ; j < newMatch.length; j++){
-                if(dest[i + j] == newMatch[j]){
+            for (int j = 0; j < newMatch.length; j++) {
+                if (dest[i + j] != newMatch[j]) {
                     mat = false;
                     break;
                 }
             }
-            if(mat){
-                return i;
+            if (mat) {
+                System.out.println("匹配字符位置是：" + printArray(substring(dest, 0, i + matchIndex )) + " >>>  " + (i + matchIndex ) + "  匹配字符串已匹配长度是：" + printArray(substring(match, 0, matchIndex)) + " >>>  " + matchIndex+"\n\n");
+                return i + 1;
             }
         }
-        return  1;
+        return 1;
     }
 
     /**
@@ -138,7 +152,7 @@ public class StringMatch {
      *
      * @return
      */
-    public int KMPMatch() {
+    public int KMPMatch() throws ParameterException {
         if (StringUtils.isEmpty(dest) || StringUtils.isEmpty(mach)) {
             return -1;
         }
@@ -146,15 +160,18 @@ public class StringMatch {
         char[] match = this.mach.toCharArray();
         int maIndex = 0;
         for (int i = 0; i < dest.length; ) {
-            boolean m = true;
+            boolean m = true;//是否匹配
             for (int j = maIndex; i < match.length; j++) {
+                //文字结束还没有匹配完，匹配失败
                 if (i + j >= dest.length) {
                     return -1;
                 }
+                //没有匹配，则计算需要向后移动的距离
                 if (dest[i + j] != match[j]) {
                     m = false;
-                    maIndex = j;
-                    i = i + j - 1;
+                    maIndex = next(dest, match, i + 1, j);
+                    System.err.println("向后移动距离是：" + (i + maIndex) + "\t" + j + "\n");
+                    i = i + maIndex - 1;
                     break;
                 }
             }
