@@ -29,11 +29,16 @@ public class Stack<T> {
     private Object[] elements;
 
     /**
+     * 当前定指针
+     */
+    private int count = 0;
+    /**
      * 空的列表
      */
-    private  Stack() {
+    private Stack() {
         this.elements = new Object[INITIAL_CAPACITY];
         this.elementCount = INITIAL_CAPACITY;
+        this.count = 0;
     }
 
     /**
@@ -47,6 +52,7 @@ public class Stack<T> {
         }
         this.elementCount = capacity;
         this.elements = new Object[capacity];
+        this.count = 0;
     }
 
     /**
@@ -84,8 +90,8 @@ public class Stack<T> {
      * @return
      */
     public synchronized T push(T element) {
-        groupHelper(this.elements.length + 1);
-        this.elements[this.elements.length + 1] = element;
+        groupHelper(this.count + 1);
+        this.elements[this.count ++ ] = element;
         return element;
     }
 
@@ -99,8 +105,7 @@ public class Stack<T> {
         if (this.elements.length == 0) {
             throw new RuntimeException("empty stack.");
         }
-        T data = (T) this.elements[this.elements.length - 1];
-        return data;
+        return (T) this.elements[this.count - 1];
     }
 
     /**
@@ -112,7 +117,7 @@ public class Stack<T> {
     public synchronized T pop() {
         T data = getTop();
         //clear last element
-        this.elements[this.elements.length - 1] = null;
+        this.elements[this.count -- ] = null;
         return data;
     }
 
@@ -122,7 +127,7 @@ public class Stack<T> {
      * @return true 为空 false 不为空
      */
     public boolean empty() {
-        return this.elements.length == 0;
+        return this.count == 0;
     }
 
     /**
@@ -132,15 +137,15 @@ public class Stack<T> {
      * @param mimiCapacity 增长数据
      */
     private void groupHelper(int mimiCapacity) {
-        if (this.elementCount > mimiCapacity) {
-            group(mimiCapacity);
+        if (this.elementCount < mimiCapacity) {
+            group();
         }
     }
 
     /**
      * 自增长
      */
-    private void group(int miniCapacity) {
+    private void group() {
         int oldCapacity = this.elementCount;
         int newCapacity = oldCapacity + growFactor();
         this.elements = Arrays.copyOf(this.elements, newCapacity);
