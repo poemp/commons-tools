@@ -95,6 +95,18 @@ public class Stack<T> {
         return element;
     }
 
+     /**
+     * 把一个栈的数据放入到另外一个栈中
+     * @param stack 栈
+     * @return 放入另外一个栈
+     */
+    public synchronized Stack<T>  push(Stack<T> stack){
+        while (!stack.empty()){
+            this.push(stack.pop());
+        }
+        return this;
+    }
+    
     /**
      * 获取第一个元素
      *
