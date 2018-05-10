@@ -31,7 +31,7 @@ public class Stack<T> {
     /**
      * 空的列表
      */
-    private Stack() {
+    private  Stack() {
         this.elements = new Object[INITIAL_CAPACITY];
         this.elementCount = INITIAL_CAPACITY;
     }
@@ -54,7 +54,7 @@ public class Stack<T> {
      *
      * @return
      */
-    public Stack emptyStack() {
+    public static Stack emptyStack() {
         return new Stack();
     }
 
@@ -64,7 +64,7 @@ public class Stack<T> {
      * @param capacity
      * @return
      */
-    public Stack initStack(int capacity) {
+    public static Stack initStack(int capacity) {
         return new Stack(capacity);
     }
 
