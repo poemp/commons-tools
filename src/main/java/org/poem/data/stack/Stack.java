@@ -129,6 +129,22 @@ public class Stack<T> {
     public boolean empty() {
         return this.count == 0;
     }
+    
+    /**
+     * 转化为列表
+     *
+     * @return 返回列表
+     */
+    @SuppressWarnings("unchecked")
+    public List<T> toList() {
+        List<T> tList = Lists.empty();
+        int count = this.count - 1;
+        do {
+            tList.add((T) this.elements[count--]);
+        } while (count >= 0);
+        return tList;
+    }
+
 
     /**
      * 增长验证
