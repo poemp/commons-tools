@@ -54,8 +54,8 @@ public class Stack<T> {
      *
      * @return
      */
-    public static Stack emptyStack() {
-        return new Stack();
+    public static <T> Stack<T> emptyStack() {
+        return new Stack<T>();
     }
 
     /**
@@ -64,8 +64,8 @@ public class Stack<T> {
      * @param capacity
      * @return
      */
-    public static Stack initStack(int capacity) {
-        return new Stack(capacity);
+    public static <T> Stack<T> initStack(int capacity) {
+        return new Stack<T>(capacity);
     }
 
     /**
