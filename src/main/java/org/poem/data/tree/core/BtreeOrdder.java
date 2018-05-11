@@ -84,4 +84,41 @@ public class BTreeOrder {
         }
         return stack;
     }
+    
+    /**
+     * 使用前根遍历方式获取叶子节点数量
+     * @param bTree 树
+     * @param <T> 数据类型
+     * @return  叶子节点的数目
+     */
+    public static <T extends Comparable<T>> int countLeaf(BTree<T> bTree){
+         int count = 0;
+         if(bTree != null){
+             //叶子节点 ， 左右子树为空
+             if(bTree.getRightNode() == null && bTree.getLeftNode() == null){
+                 count = count + 1;
+             }
+             else{
+                 count += countLeaf(bTree.getLeftNode());
+                 count += countLeaf(bTree.getRightNode());
+             }
+         }
+         return count;
+    }
+
+    /**
+     * 统计树的深度
+     * @param bTree 需要统计的树
+     * @param <T> 数据类型 extend Comparable
+     * @return
+     */
+    public static <T extends Comparable<T>> int countDepth(BTree<T> bTree){
+        if(bTree != null){
+            int leftDepth = countDepth(bTree.getLeftNode());
+            int rightDepth = countDepth(bTree.getRightNode());
+            int depth = Math.max(leftDepth,rightDepth);
+            return depth+1;
+        }
+        return  0;
+    }
 }
