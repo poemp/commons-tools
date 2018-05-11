@@ -100,9 +100,9 @@ public class StringMatch {
             LoggerUtils.warn("resource:" + (resource == null ? new char[0] : resource) + "  start:" + start + " end:" + end);
             throw new ParameterException("参数错误!");
         }
-        char[] newChar = new char[end - start];
-        for (int i = 0; i < end - start; i++) {
-            newChar[i] = resource[start + i];
+        char[] newChar = new char[end + 1];
+        for (int i = 0; i < end + 1; i++) {
+            newChar[i] = resource[i];
         }
         return newChar;
     }
@@ -125,7 +125,7 @@ public class StringMatch {
      * @param dest         原始字符串
      * @param match        匹配字符串
      * @param currentIndex 当前匹配的字符串位置
-     * @param matchIndex   匹配的长度
+     * @param matchIndex   匹配的位置
      * @return 移动的位置
      */
     private static int next(char[] dest, char[] match, int currentIndex, int matchIndex) throws ParameterException {
@@ -133,13 +133,12 @@ public class StringMatch {
         for (int i = currentIndex; i < dest.length; i++) {
             boolean mat = true;
             for (int j = 0; j < newMatch.length; j++) {
-                if (dest[i + j] != newMatch[j]) {
+                if (dest[i + j + 1] != newMatch[j]) {
                     mat = false;
                     break;
                 }
             }
             if (mat) {
-                System.out.println("匹配字符位置是：" + printArray(substring(dest, 0, i + matchIndex )) + " >>>  " + (i + matchIndex ) + "  匹配字符串已匹配长度是：" + printArray(substring(match, 0, matchIndex)) + " >>>  " + matchIndex+"\n\n");
                 return i + 1;
             }
         }
@@ -169,9 +168,10 @@ public class StringMatch {
                 //没有匹配，则计算需要向后移动的距离
                 if (dest[i + j] != match[j]) {
                     m = false;
-                    maIndex = next(dest, match, i + 1, j);
-                    System.err.println("向后移动距离是：" + (i + maIndex) + "\t" + j + "\n");
+                    maIndex = next(dest, match, i+1, j  - 1 );
+                    System.out.println("向后移动距离是：" + (i + maIndex) + "\t" + (j));
                     i = i + maIndex - 1;
+                    System.out.println(" ------ ：" + (i + maIndex ) +" 已经匹配:" + printArray(substring(dest, 0 , i)) + "\t\t" + i  + "\t\t" + printArray(substring(match, 0 , j-1)) + "\t\t"+ j +  "\n");
                     break;
                 }
             }

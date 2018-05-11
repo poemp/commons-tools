@@ -1,18 +1,24 @@
 package org.poem.data.test;
 
 import org.poem.data.string.StringMatch;
+import org.poem.lang.exception.ParameterException;
 
 public class StringMatchTest {
     public static void main(String[] args) {
-        String desc  = "acacacacbacbabca";
+        String desc  = "acacacacacacacacacbacbabca";
         String match = "acbab";
+        System.out.println(desc + "\t\t\t\t\t\t\t\t\n" + match);
         int index = StringMatch.getInstance()
                 .dest(desc).match(match).normalMatch();
 
         System.out.println("normal index:" + index + "\n\n");
 
-        index = StringMatch.getInstance()
-                .dest(desc).match(match).KMPMatch();
+        try {
+            index = StringMatch.getInstance()
+                    .dest(desc).match(match).KMPMatch();
+        } catch (ParameterException e) {
+            e.printStackTrace();
+        }
         System.out.println("KMP index: " + index);
     }
 }
