@@ -1,6 +1,9 @@
 package org.poem.data.stack;
 
+import org.poem.utils.collection.Lists;
+
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 栈对象
