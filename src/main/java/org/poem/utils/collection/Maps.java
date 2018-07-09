@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Maps {
 
-    public static <K, V> Map<K,V> emptys(){
+    public static <K, V> Map<K,V> empty(){
         return new HashMap<>();
     }
     
