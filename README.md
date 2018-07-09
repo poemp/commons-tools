@@ -31,3 +31,8 @@ javax.naming.ldap.InitialLdapContext
 7、使用 mysql -u root -p 初始化的密码
 8、修改密码set password for root@localhost = password('123456');
 ````
+
+
+
+
+git reset --hard  HEAD
