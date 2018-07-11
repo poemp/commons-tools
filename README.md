@@ -36,3 +36,5 @@ javax.naming.ldap.InitialLdapContext
 
 
 git reset --hard  HEAD
+
+find -type f|xargs grep -i e2e
