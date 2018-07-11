@@ -38,3 +38,9 @@ javax.naming.ldap.InitialLdapContext
 git reset --hard  HEAD
 
 find -type f|xargs grep -i e2e
+
+## vim 命令
+set nowrapscan  禁止在搜索到文件两端时重新搜索
+set incsearch  输入搜索内容时就显示搜索结果
+set hlsearch   搜索时高亮显示被找到的文本
+set number  显示行号
