@@ -1,6 +1,6 @@
 package org.poem.data.tree.core;
 
-import org.poem.data.tree.BTree;
+import org.poem.data.tree.Btree;
 import org.poem.utils.collection.Lists;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class BTreeOrdder {
      * @param <T>   数据类型
      * @return 节点中保存的数据
      */
-    private static <T extends Comparable<T>> T visitNode(BTree<T> bTree) {
+    private static <T extends Comparable<T>> T visitNode(Btree<T> bTree) {
         return bTree.getDate();
     }
 
@@ -33,7 +33,7 @@ public class BTreeOrdder {
      * @param <T>        类型
      * @return 栈
      */
-    public static <T extends Comparable<T>> List<T> preOrder(BTree<T> bTreeOrder) {
+    public static <T extends Comparable<T>> List<T> preOrder(Btree<T> bTreeOrder) {
         List<T> stack = Lists.empty();
         if (bTreeOrder != null) {
             stack.add(visitNode(bTreeOrder));
@@ -54,7 +54,7 @@ public class BTreeOrdder {
      * @param <T>   ；类型
      * @return 树栈
      */
-    public static <T extends Comparable<T>> List<T> inOrder(BTree<T> bTreeOrder) {
+    public static <T extends Comparable<T>> List<T> inOrder(Btree<T> bTreeOrder) {
         List<T> stack = Lists.empty();
         if (bTreeOrder != null) {
             stack.addAll(inOrder(bTreeOrder.getLeftNode()));
@@ -75,7 +75,7 @@ public class BTreeOrdder {
      * @param <T>    类型
      * @return 树栈
      */
-    public static <T extends Comparable<T>> List<T> lastOrder(BTree<T> bTreeOrder) {
+    public static <T extends Comparable<T>> List<T> lastOrder(Btree<T> bTreeOrder) {
         List<T> stack = Lists.empty();
         if (bTreeOrder != null) {
             stack.addAll(lastOrder(bTreeOrder.getLeftNode()));
@@ -91,7 +91,7 @@ public class BTreeOrdder {
      * @param <T> 数据类型
      * @return  叶子节点的数目
      */
-    public static <T extends Comparable<T>> int countLeaf(BTree<T> bTree){
+    public static <T extends Comparable<T>> int countLeaf(Btree<T> bTree){
          int count = 0;
          if(bTree != null){
              //叶子节点 ， 左右子树为空
@@ -112,7 +112,7 @@ public class BTreeOrdder {
      * @param <T> 数据类型 extend Comparable
      * @return
      */
-    public static <T extends Comparable<T>> int countDepth(BTree<T> bTree){
+    public static <T extends Comparable<T>> int countDepth(Btree<T> bTree){
         if(bTree != null){
             int leftDepth = countDepth(bTree.getLeftNode());
             int rightDepth = countDepth(bTree.getRightNode());

@@ -4,12 +4,12 @@ package org.poem.data.tree;
  * 树
  * @param <T>
  */
-public class BTree<T> {
+public class Btree<T> {
 
     /**
      * 左边树
      */
-    private BTree<T> leftNode;
+    private Btree<T> leftNode;
 
     /**
      * 数据
@@ -19,13 +19,13 @@ public class BTree<T> {
     /**
      * 右边数
      */
-    private BTree<T> rightNode;
+    private Btree<T> rightNode;
 
-    public BTree<T> getLeftNode() {
+    public Btree<T> getLeftNode() {
         return leftNode;
     }
 
-    public void setLeftNode(BTree<T> leftNode) {
+    public void setLeftNode(Btree<T> leftNode) {
         this.leftNode = leftNode;
     }
 
@@ -37,11 +37,11 @@ public class BTree<T> {
         this.date = date;
     }
 
-    public BTree<T> getRightNode() {
+    public Btree<T> getRightNode() {
         return rightNode;
     }
 
-    public void setRightNode(BTree<T> rightNode) {
+    public void setRightNode(Btree<T> rightNode) {
         this.rightNode = rightNode;
     }
 
