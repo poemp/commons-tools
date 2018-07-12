@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * B树遍历
  */
-public class BTreeOrder {
+public class BTreeOrdder {
 
     /**
      * 访问节点
