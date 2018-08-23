@@ -11,6 +11,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils{
 
     
     /**
+     * 特殊符号过滤
      * 过滤掉文字中的符号
      * @param str
      * @return
@@ -25,6 +26,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils{
     }
 
     /**
+     * 特殊符号过滤
      * 把转移符转化成标准的符号
      * @param str
      * @return
@@ -67,7 +69,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils{
     }
 
     /**
-     * 转为为8进制文件
+     * 转为为十六进制文件
      * @param sb
      * @param b
      */
