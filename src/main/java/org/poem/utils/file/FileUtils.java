@@ -7,10 +7,7 @@ import org.poem.utils.string.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -19,10 +16,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by poem on 2016/6/18.
@@ -131,18 +125,20 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
 
     /**
      * 获取文件名称
+     *
      * @param fileName 文件名称
      * @return
      */
-    public static String getFileExistName(String fileName){
+    public static String getFileExistName(String fileName) {
         if ((fileName != null) && (fileName.length() > 0)) {
             int dot = fileName.lastIndexOf('.');
             if ((dot > -1) && (dot < (fileName.length() - 1))) {
-                return fileName.substring(0,dot);
+                return fileName.substring(0, dot);
             }
         }
         return fileName;
     }
+
     /**
      * window 按照权限写入数据
      *
@@ -232,5 +228,32 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
             IOUtils.closeQuietly(sbc);
         }
 
+    }
+
+
+    /**
+     * 写入到文件中
+     *
+     * @param message
+     * @param file
+     */
+    public static void writeStr(String message, File file) {
+        FileOutputStream fileOutputStream = null;
+        try {
+            if (file.exists()) {
+                file.delete();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(message.getBytes());
+            fileOutputStream.write("\n".getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+            LoggerUtils.error(e.getMessage(), e);
+        } finally {
+            IOUtils.closeQuietly(fileOutputStream);
+        }
     }
 }

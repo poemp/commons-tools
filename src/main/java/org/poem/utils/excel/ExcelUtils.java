@@ -22,7 +22,9 @@ public class ExcelUtils {
 
     /**
      * 读取文件
-     * @param file
+     * 跳过有表头数据
+     *
+     * @param file 读取excel 文件
      * @return
      * @throws IOException
      */
@@ -71,15 +73,15 @@ public class ExcelUtils {
                         }
                     } else {
                         String vcalue;
-                        switch (cell.getCellType()) {
-                            case Cell.CELL_TYPE_STRING:
+                        switch (cell.getCellTypeEnum()) {
+                            case STRING:
                                 vcalue = cell.getStringCellValue();
                                 break;
-                            case Cell.CELL_TYPE_BOOLEAN:
+                            case BOOLEAN:
                                 Boolean val1 = cell.getBooleanCellValue();
                                 vcalue = val1.toString();
                                 break;
-                            case Cell.CELL_TYPE_NUMERIC:
+                            case NUMERIC:
                                 if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
                                     Date theDate = cell.getDateCellValue();
                                     SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd");
@@ -89,11 +91,11 @@ public class ExcelUtils {
                                     vcalue = df.format(cell.getNumericCellValue());
                                 }
                                 break;
-                            case Cell.CELL_TYPE_BLANK:
+                            case BLANK:
                                 vcalue = "";
                                 break;
                             default:
-                                cell.setCellType(HSSFCell.CELL_TYPE_STRING);//无条件转为文本，迫不得已
+                                cell.setCellType(CellType.STRING);//无条件转为文本，迫不得已
                                 vcalue = cell.getStringCellValue();
                         }
                         if (cell.getColumnIndex() < header.size()) {
