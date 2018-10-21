@@ -8,7 +8,6 @@ import org.poem.utils.logger.LoggerUtils;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
@@ -16,7 +15,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by poem on 2016/6/18.
+ *
+ * @author poem
+ * @date 2016/6/18
  */
 public final class PropertiesUtils {
 

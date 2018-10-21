@@ -4,22 +4,27 @@ import org.apache.commons.io.IOUtils;
 import org.poem.utils.collection.Sets;
 import org.poem.utils.logger.LoggerUtils;
 import org.poem.utils.string.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SeekableByteChannel;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * Created by poem on 2016/6/18.
+ *
+ * @author poem
+ * @date 2016/6/18
  */
 public final class FileUtils extends org.apache.commons.io.FileUtils {
 

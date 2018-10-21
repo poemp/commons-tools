@@ -7,6 +7,7 @@ import java.util.Set;
 /**
  * 扩展子HashSet
  *
+ * @author poem
  * @param <E>
  */
 public final class Sets<E> extends HashSet<E> {

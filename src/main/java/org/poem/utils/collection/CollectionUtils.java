@@ -4,6 +4,7 @@ import java.util.Map;
 
 /**
  * commons utils
+ * @author poem
  */
 public final class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
 

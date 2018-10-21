@@ -5,7 +5,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
 /**
- * Created by poem on 2016/4/18.
+ *
+ * @author poem
+ * @date 2016/4/18
  * 文件管理
  */
 public final class URLUtil {

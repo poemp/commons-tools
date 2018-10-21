@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * lists extend java.utils.ArrayList
  *
+ * @author poem
  * @since java
  */
 public final class Lists<E> extends ArrayList<E> {

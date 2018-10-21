@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * json Bean
+ * @author poem
  */
 public class JsonBean implements Serializable {
 

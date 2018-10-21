@@ -4,7 +4,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 
 /**
- * Created by poem on 2015/2/2.
+ *
+ * @author poem
+ * @date 2015/2/2
  * String 字符验证
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils{

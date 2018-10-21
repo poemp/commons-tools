@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.zip.CRC32;
 
+/**
+ * @author poem
+ */
 public class CRC32Utils {
 
     /**
@@ -32,8 +35,9 @@ public class CRC32Utils {
             return null;
         } finally {
             try {
-                if (fileInputStream != null)
+                if (fileInputStream != null) {
                     fileInputStream.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
