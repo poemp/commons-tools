@@ -1,6 +1,6 @@
-package org.poem.data.test;
+package org.poem.utils.date.test;
 
-import org.poem.data.string.SeqString;
+import org.poem.utils.date.string.SeqString;
 
 public class SeqStringTest {
 

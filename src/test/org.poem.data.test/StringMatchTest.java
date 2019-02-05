@@ -1,6 +1,6 @@
-package org.poem.data.test;
+package org.poem.utils.date.test;
 
-import org.poem.data.string.StringMatch;
+import org.poem.utils.date.string.StringMatch;
 import org.poem.lang.exception.ParameterException;
 
 public class StringMatchTest {
